@@ -11,6 +11,7 @@ RUN set -x \
       ca-certificates \
       build-essential \
       wget \
+			openssl \
       postgresql-server-dev-10 \
       postgresql-plpython-10
 
