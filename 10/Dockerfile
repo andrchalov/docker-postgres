@@ -13,7 +13,12 @@ RUN set -x \
       wget \
 			openssl \
       postgresql-server-dev-10 \
-      postgresql-plpython-10
+      postgresql-plpython-10 \
+			python-pip
+
+# install python modules
+RUN set -x \
+	&& pip install -t /usr/lib/python2.7 requests
 
 # Install pgtap
 RUN set -x \
