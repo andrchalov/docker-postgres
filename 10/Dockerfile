@@ -11,10 +11,11 @@ RUN set -x \
       ca-certificates \
       build-essential \
       wget \
-			openssl \
+      openssl \
       postgresql-server-dev-10 \
       postgresql-plpython-10 \
-			python-pip
+      python-pip \
+      python-setuptools
 
 # Install pgtap
 RUN set -x \
@@ -43,7 +44,7 @@ RUN set -x \
 	&& pip install -t /usr/lib/python2.7 pyyaml
 
 RUN set -ex \
-  && apt-get -y remove postgresql-server-dev-10 \
+  && apt-get -y remove postgresql-server-dev-10 python-setuptools \
   && apt-get purge -y --auto-remove wget build-essential \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*;
