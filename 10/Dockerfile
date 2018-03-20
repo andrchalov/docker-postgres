@@ -16,11 +16,6 @@ RUN set -x \
       postgresql-plpython-10 \
 			python-pip
 
-# install python modules
-RUN set -x \
-	&& pip install -t /usr/lib/python2.7 requests \
-	&& pip install -t /usr/lib/python2.7 pyyaml
-
 # Install pgtap
 RUN set -x \
   && wget https://github.com/theory/pgtap/archive/v${PGTAP_VERSION}.tar.gz \
@@ -41,6 +36,11 @@ RUN set -x \
   && make install \
   && cd .. \
   && rm -Rdf url_encode-${URL_ENCODE_VERSION} v${URL_ENCODE_VERSION}.tar.gz
+
+# install python modules
+RUN set -x \
+	&& pip install -t /usr/lib/python2.7 requests \
+	&& pip install -t /usr/lib/python2.7 pyyaml
 
 RUN set -ex \
   && apt-get -y remove postgresql-server-dev-10 \
