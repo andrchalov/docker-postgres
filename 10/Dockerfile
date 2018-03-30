@@ -44,7 +44,7 @@ RUN set -x \
 	&& pip install -t /usr/lib/python2.7 pyyaml
 
 RUN set -ex \
-  && apt-get -y remove postgresql-server-dev-10 python-setuptools \
+  && apt-get -y remove python-setuptools \
   && apt-get purge -y --auto-remove wget build-essential \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*;
