@@ -1,8 +1,8 @@
 
-FROM postgres:10.1
+FROM postgres:10.6
 
 ENV \
-	PGTAP_VERSION=0.98.0 \
+	PGTAP_VERSION=0.99.0 \
   URL_ENCODE_VERSION=1.2.3
 
 RUN set -x \
