@@ -41,7 +41,8 @@ RUN set -x \
 # install python modules
 RUN set -x \
 	&& pip install -t /usr/lib/python2.7 requests \
-	&& pip install -t /usr/lib/python2.7 pyyaml
+	&& pip install -t /usr/lib/python2.7 pyyaml \
+	&& pip install -t /usr/lib/python2.7 requests_toolbelt
 
 RUN set -ex \
   && apt-get -y remove python-setuptools \
