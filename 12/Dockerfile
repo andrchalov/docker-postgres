@@ -1,5 +1,5 @@
 
-FROM postgres:10.10
+FROM postgres:12.0
 
 ENV \
 	PGTAP_VERSION=0.99.0 \
@@ -12,10 +12,10 @@ RUN set -x \
       build-essential \
       wget \
       openssl \
-      postgresql-server-dev-10 \
-      postgresql-plpython-10 \
-      python-pip \
-      python-setuptools
+      postgresql-server-dev-12 \
+      postgresql-plpython3-12 \
+      python3-pip \
+      python3-setuptools
 
 # Install pgtap
 RUN set -x \
@@ -40,21 +40,12 @@ RUN set -x \
 
 # install python modules
 RUN set -x \
-	&& pip install -t /usr/lib/python2.7 requests \
-	&& pip install -t /usr/lib/python2.7 pyyaml \
-	&& pip install -t /usr/lib/python2.7 requests_toolbelt
+	&& pip3 install -t /usr/lib/python3.7 requests \
+	&& pip3 install -t /usr/lib/python3.7 pyyaml \
+	&& pip3 install -t /usr/lib/python3.7 requests_toolbelt
 
 RUN set -ex \
   && apt-get -y remove python-setuptools \
   && apt-get purge -y --auto-remove wget build-essential \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*;
-
-COPY docker-entrypoint.sh /
-RUN chmod 755 /docker-entrypoint.sh
-
-ENTRYPOINT ["/docker-entrypoint.sh"]
-
-EXPOSE 5432
-
-CMD ["postgres"]

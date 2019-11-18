@@ -1,5 +1,5 @@
 
-FROM postgres:10.10
+FROM postgres:11.5
 
 ENV \
 	PGTAP_VERSION=0.99.0 \
@@ -12,22 +12,22 @@ RUN set -x \
       build-essential \
       wget \
       openssl \
-      postgresql-server-dev-10 \
-      postgresql-plpython-10 \
-      python-pip \
-      python-setuptools
-
-# Install pgtap
-RUN set -x \
-  && wget https://github.com/theory/pgtap/archive/v${PGTAP_VERSION}.tar.gz \
-  && tar -xzvf v${PGTAP_VERSION}.tar.gz \
-  && rm -f v${PGTAP_VERSION}.tar.gz \
-  && cd pgtap-${PGTAP_VERSION} \
-  && make \
-  && make install \
-  && cd .. \
-  && rm -rf pgtap-${PGTAP_VERSION}
-
+      postgresql-server-dev-11 \
+      postgresql-plpython3-11 \
+      python3-pip \
+      python3-setuptools
+#
+# # Install pgtap
+# RUN set -x \
+#   && wget https://github.com/theory/pgtap/archive/v${PGTAP_VERSION}.tar.gz \
+#   && tar -xzvf v${PGTAP_VERSION}.tar.gz \
+#   && rm -f v${PGTAP_VERSION}.tar.gz \
+#   && cd pgtap-${PGTAP_VERSION} \
+#   && make \
+#   && make install \
+#   && cd .. \
+#   && rm -rf pgtap-${PGTAP_VERSION}
+#
 # Install url_encode
 RUN set -x \
   && wget https://github.com/okbob/url_encode/archive/v${URL_ENCODE_VERSION}.tar.gz \
@@ -40,21 +40,12 @@ RUN set -x \
 
 # install python modules
 RUN set -x \
-	&& pip install -t /usr/lib/python2.7 requests \
-	&& pip install -t /usr/lib/python2.7 pyyaml \
-	&& pip install -t /usr/lib/python2.7 requests_toolbelt
+	&& pip3 install -t /usr/lib/python3.5 requests \
+	&& pip3 install -t /usr/lib/python3.5 pyyaml \
+	&& pip3 install -t /usr/lib/python3.5 requests_toolbelt
 
 RUN set -ex \
   && apt-get -y remove python-setuptools \
   && apt-get purge -y --auto-remove wget build-essential \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*;
-
-COPY docker-entrypoint.sh /
-RUN chmod 755 /docker-entrypoint.sh
-
-ENTRYPOINT ["/docker-entrypoint.sh"]
-
-EXPOSE 5432
-
-CMD ["postgres"]
